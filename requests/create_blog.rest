@@ -1,0 +1,9 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+    "title": "Day at the park",
+    "author": "Joe",
+    "url": "youtube.com",
+    "likes": 5
+}
