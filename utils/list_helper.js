@@ -8,7 +8,24 @@ const totalLikes = (blogs) => {
     }, 0)
 }
 
+const favoriteBlog = (blogs) => {
+    let favorite = 'no blogs'
+    let mostLikes = -1
+    blogs.map(blog => [blog.title,blog.author,blog.likes]).forEach(blog => {
+        if (blog[2]>mostLikes) {
+            favorite = {
+                title: blog[0],
+                author: blog[1],
+                likes: blog[2]
+            }
+            mostLikes = blog[2]
+        }
+    })
+    return favorite
+}
+
 module.exports = {
     dummy,
-    totalLikes
+    totalLikes,
+    favoriteBlog
 }
