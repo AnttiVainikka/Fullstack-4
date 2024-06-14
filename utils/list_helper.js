@@ -29,7 +29,7 @@ const mostBlogs = (blogs) => {
     let mostBlogs = -1
     const authors = blogs.map(blog => blog.author)
     authors.forEach(author => {
-        blogAmount = authors.filter(x => x === author).length
+        let blogAmount = authors.filter(x => x === author).length
         if ( blogAmount > mostBlogs) {
             currentLeader = {
                 author: author,
@@ -41,9 +41,30 @@ const mostBlogs = (blogs) => {
     return currentLeader
 }
 
+const mostLikes = (blogs) => {
+    let currentLeader = "no blogs"
+    let mostliked = -1
+    const authors = blogs.map(blog => [blog.author,blog.likes])
+    authors.forEach(author => {
+        let authorsBlogs = authors.filter((x) => x[0] === author[0])
+        let authorsLikes = authorsBlogs.map(x => x[1]).reduce((accumalator, currentValue) => {
+            return accumalator + currentValue
+        },0)
+        if ( authorsLikes > mostliked) {
+            currentLeader = {
+                author: author[0],
+                likes: authorsLikes
+            }
+            mostliked = authorsLikes
+        }
+    })
+    return currentLeader
+}
+
 module.exports = {
     dummy,
     totalLikes,
     favoriteBlog,
-    mostBlogs
+    mostBlogs,
+    mostLikes
 }

@@ -138,3 +138,28 @@ describe('most prolific author', () => {
     assert.strictEqual(result3, 'no blogs')
   })
 })
+
+describe('most liked author', () => {
+
+  test('when list has only one blog returns that author with correct amount of likes', () => {
+    const result = listHelper.mostLikes(listWithOneBlog)
+    const answer = {
+        author: 'Edsger W. Dijkstra',
+        likes: 5
+    }
+    assert.strictEqual(JSON.stringify(result), JSON.stringify(answer))
+  })
+  test('when list has many blogs returns the most liked author with correct amount of likes', () => {
+    const result2 = listHelper.mostLikes(listWithSeveralBlogs)
+    const answer2 = {
+        author: "Edsger W. Dijkstra",
+        likes: 17
+    }
+    assert.strictEqual(JSON.stringify(result2), JSON.stringify(answer2))
+  })
+  test("when there are no blogs returns 'no blogs'", () => {
+    const result3 = listHelper.mostLikes([])
+    console.log(result3)
+    assert.strictEqual(result3, 'no blogs')
+  })
+})
