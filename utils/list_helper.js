@@ -24,8 +24,26 @@ const favoriteBlog = (blogs) => {
     return favorite
 }
 
+const mostBlogs = (blogs) => {
+    let currentLeader = "no blogs"
+    let mostBlogs = -1
+    const authors = blogs.map(blog => blog.author)
+    authors.forEach(author => {
+        blogAmount = authors.filter(x => x === author).length
+        if ( blogAmount > mostBlogs) {
+            currentLeader = {
+                author: author,
+                blogs: blogAmount
+            }
+            mostBlogs = blogAmount
+        }
+    })
+    return currentLeader
+}
+
 module.exports = {
     dummy,
     totalLikes,
-    favoriteBlog
+    favoriteBlog,
+    mostBlogs
 }

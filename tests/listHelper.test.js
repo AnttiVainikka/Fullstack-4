@@ -85,7 +85,7 @@ describe('total likes', () => {
         const result3 = listHelper.totalLikes([])
         assert.strictEqual(result3, 0)
     })
-  })
+})
 
 describe('favorite blog', () => {
 
@@ -107,9 +107,34 @@ describe('favorite blog', () => {
         }
         assert.strictEqual(JSON.stringify(result2), JSON.stringify(answer2))
       })
-      test("when there are no blogs returns 'no blogs'", () => {
-          const result3 = listHelper.favoriteBlog([])
-          console.log(result3)
-          assert.strictEqual(result3, 'no blogs')
+    test("when there are no blogs returns 'no blogs'", () => {
+        const result3 = listHelper.favoriteBlog([])
+        console.log(result3)
+        assert.strictEqual(result3, 'no blogs')
       })
+})
+
+describe('most prolific author', () => {
+
+  test('when list has only one blog returns that author with correct amount of blogs', () => {
+    const result = listHelper.mostBlogs(listWithOneBlog)
+    const answer = {
+        author: 'Edsger W. Dijkstra',
+        blogs: 1
+    }
+    assert.strictEqual(JSON.stringify(result), JSON.stringify(answer))
+  })
+  test('when list has many blogs returns the most prolific author with correct amount of blogs', () => {
+    const result2 = listHelper.mostBlogs(listWithSeveralBlogs)
+    const answer2 = {
+        author: "Robert C. Martin",
+        blogs: 3
+    }
+    assert.strictEqual(JSON.stringify(result2), JSON.stringify(answer2))
+  })
+  test("when there are no blogs returns 'no blogs'", () => {
+    const result3 = listHelper.mostBlogs([])
+    console.log(result3)
+    assert.strictEqual(result3, 'no blogs')
+  })
 })
