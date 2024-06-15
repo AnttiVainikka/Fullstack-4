@@ -83,6 +83,57 @@ describe('posting blogs', () => {
     })
 })
 
+describe('deleting blogs', () => {
+
+    test('deleting a blog with its id works', async () => {
+        const newBlog = {
+            title: 'Delete',
+            author: 'Poista',
+            url: 'Remove',
+            likes: 0
+          }
+        await api.post('/api/blogs').send(newBlog)
+        const toDelete = await Blog.find({title: 'Delete'})
+        const oneFound = toDelete.length
+        await api.delete(`/api/blogs/${toDelete[0].id}`).expect(204)
+        const noMore = await Blog.find({title: 'Delete'})
+        assert.strictEqual(noMore.length,oneFound-1)
+    })
+
+    test('deleting with nonexistant id returns 400', async () => {
+        await api.delete(`/api/blogs/12345`).expect(400)
+    })
+})
+
+describe('editing blogs', () => {
+
+    test('updating the likes of a blog with its id works', async () => {
+        const newBlog = {
+            title: 'Conniving',
+            author: 'Lendra Pendra',
+            url: 'google.com',
+            likes: 9
+          }
+        const newLikes = {
+            title: 'Conniving',
+            author: 'Lendra Pendra',
+            url: 'google.com',
+            likes: 10
+          }
+        await api.post('/api/blogs').send(newBlog)
+        const toUpdate = await Blog.find({title: 'Conniving'})
+        await api.put(`/api/blogs/${toUpdate[0].id}`)
+            .send(newLikes)
+            .expect('Content-Type', /application\/json/)
+        const updated = await Blog.find({title: 'Conniving'})
+        assert.strictEqual(updated[0].likes,10)
+    })
+
+    test('updating with nonexistant id returns 400', async () => {
+        await api.put(`/api/blogs/12345`).expect(400)
+    })
+})
+
 after(async () => {
   await mongoose.connection.close()
 })
